@@ -11,6 +11,7 @@ Beamgun 是一个 Windows 安全防护工具，用于检测 USB Rubber Ducky 键
 * **全屏锁定**：检测到键盘/鼠标攻击后，显示全屏锁定窗口（`sp.png` 图片 + 密码输入框），需输入正确密码解锁。
 * **陌生设备拦截**：检测到非白名单 USB 设备插入时（U盘、移动硬盘等，排除键盘/鼠标/网络适配器），自动全屏锁定。解锁后弹出授权对话框，选择「授权」则加入白名单，选择「不授权」则安全弹出设备。
 * **解锁密码管理**：密码以 PBKDF2 加盐哈希存储在 `password.txt` 中（兼容旧版 MD5 格式读取），支持界面内修改。
+* **密码文件防篡改监测**：持续监测 `password.txt`，当被外部程序修改/删除时弹窗告警，防止病毒篡改解锁密码。
 * **攻击日志记录**：攻击事件同时写入 `beamgun.log` 文件和界面告警日志。
 * **USB 大容量存储禁用**：通过注册表控制 USB 存储设备的启用/禁用（需管理员权限）。
 * **设备白名单**：通过 `whitelist.cfg` 文件放行已知安全的设备，支持界面内授权时自动添加。
@@ -66,6 +67,8 @@ HID\VID_XXXX&PID_XXXXX&MI_XX&COLXX\XXXXXXXXXXXXXXXXX
 --
 
 解锁密码以 PBKDF2 加盐哈希值的形式存储在程序目录下的 `password.txt` 中。在主窗口点击**设置密码**按钮可修改密码。如果 `password.txt` 尚不存在，默认密码为 `beamgun`。
+
+程序会持续监测 `password.txt`，一旦检测到该文件被 Beamgun 之外的进程修改或删除，会立即弹出安全告警，提醒你重新检查并设置密码。
 
 日志记录
 --
@@ -224,7 +227,7 @@ Beamgun 可以在普通用户权限和管理员权限下运行，但会请求当
 
 版本历史
 ==
-* 自定义分支：新增全屏锁定功能（`sp.png` + 密码解锁）、攻击日志文件（`beamgun.log`）、密码管理（`password.txt`）、界面与代码中文化。新增陌生设备拦截功能（非白名单 USB 设备插入时锁定，解锁后询问授权，不授权则安全弹出）。
+* 自定义分支：新增全屏锁定功能（`sp.png` + 密码解锁）、攻击日志文件（`beamgun.log`）、密码管理（`password.txt`）、界面与代码中文化。新增陌生设备拦截功能（非白名单 USB 设备插入时锁定，解锁后询问授权，不授权则安全弹出）。新增密码文件防篡改监测（`password.txt` 被外部进程改动时弹窗告警）。
 
 * [BeamgunInstaller-0.2.4.msi](https://s3.amazonaws.com/net.lospi.beamgun/BeamgunInstaller-0.2.4.msi) | [BeamgunApp-0.2.4.zip](https://s3.amazonaws.com/net.lospi.beamgun/BeamgunApp-0.2.4.zip)：修复了在注册表根键不存在时便携版 .exe 在某些情况下无法启动的问题。
 

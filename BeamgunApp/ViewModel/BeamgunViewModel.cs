@@ -54,6 +54,7 @@ namespace BeamgunApp.ViewModel
 
             _attackLogger = new AttackLogger();
             _passwordStore = new PasswordStore();
+            _passwordStore.ExternalChangeDetected += OnPasswordFileChanged;
             _deviceEjector = new DeviceEjector();
             _lockScreen = new LockScreenLocker(_passwordStore, _attackLogger);
             _lockScreen.Unlocked += Reset;
@@ -231,6 +232,21 @@ namespace BeamgunApp.ViewModel
             }
         }
 
+        /// <summary>
+        /// 密码文件被外部进程改写时触发：记录日志，并在 UI 线程弹出安全告警。
+        /// </summary>
+        private void OnPasswordFileChanged(string message)
+        {
+            _attackLogger.Log(message);
+            var dispatcher = Application.Current?.Dispatcher;
+            if (dispatcher == null) return;
+            dispatcher.BeginInvoke(new Action(() =>
+            {
+                BeamgunState.AppendToAlert(message);
+                MessageBox.Show(message, "安全警告", MessageBoxButton.OK, MessageBoxImage.Warning);
+            }));
+        }
+
         public void Dispose()
         {
             _keystrokeHooker?.Dispose();
@@ -240,6 +256,7 @@ namespace BeamgunApp.ViewModel
             _networkWatcher?.Dispose();
             _usbDeviceWatcher?.Dispose();
             _usbStorageGuard?.Dispose();
+            _passwordStore?.Dispose();
         }
 
         public void Reset()

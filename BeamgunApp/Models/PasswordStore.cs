@@ -22,6 +22,22 @@ namespace BeamgunApp.Models
         private static readonly string PasswordPath =
             Path.Combine(AppDomain.CurrentDomain.BaseDirectory, PasswordFilename);
 
+        private readonly object _watchLock = new object();
+        private string _knownHash;
+        private bool _suppressWatch;
+        private FileSystemWatcher _watcher;
+
+        /// <summary>
+        /// 当 password.txt 被本程序之外的进程改写（创建/修改/删除）时触发，参数为告警消息。
+        /// </summary>
+        public event Action<string> ExternalChangeDetected;
+
+        public PasswordStore()
+        {
+            _knownHash = ComputeFileHashOrNull();
+            StartWatching();
+        }
+
         public bool IsPasswordSet => File.Exists(PasswordPath);
 
         public bool Verify(string plain)
@@ -54,7 +70,21 @@ namespace BeamgunApp.Models
             }
             var hash = Pbkdf2(plain, salt, Iterations);
             var line = $"{Iterations}:{Convert.ToBase64String(salt)}:{Convert.ToBase64String(hash)}";
-            File.WriteAllText(PasswordPath, line, Encoding.ASCII);
+
+            // 写入期间抑制文件监控，避免把本程序自身的写入误判为外部篡改。
+            lock (_watchLock)
+            {
+                _suppressWatch = true;
+                try
+                {
+                    File.WriteAllText(PasswordPath, line, Encoding.ASCII);
+                    _knownHash = HashBytes(Encoding.ASCII.GetBytes(line));
+                }
+                finally
+                {
+                    _suppressWatch = false;
+                }
+            }
         }
 
         private static string ReadStored()
@@ -126,6 +156,91 @@ namespace BeamgunApp.Models
                 foreach (var b in bytes) builder.Append(b.ToString("x2"));
                 return builder.ToString();
             }
+        }
+
+        private void StartWatching()
+        {
+            try
+            {
+                var dir = Path.GetDirectoryName(PasswordPath);
+                if (string.IsNullOrEmpty(dir)) return;
+
+                _watcher = new FileSystemWatcher(dir, PasswordFilename)
+                {
+                    NotifyFilter = NotifyFilters.LastWrite |
+                                   NotifyFilters.Size |
+                                   NotifyFilters.FileName |
+                                   NotifyFilters.CreationTime
+                };
+                _watcher.Changed += OnPasswordFileChanged;
+                _watcher.Created += OnPasswordFileChanged;
+                _watcher.Deleted += OnPasswordFileChanged;
+                _watcher.Renamed += OnPasswordFileRenamed;
+                _watcher.EnableRaisingEvents = true;
+            }
+            catch
+            {
+                // 无法监控密码文件时静默跳过，不影响加解锁功能。
+            }
+        }
+
+        private void OnPasswordFileChanged(object sender, FileSystemEventArgs e)
+        {
+            HandleFileChange();
+        }
+
+        private void OnPasswordFileRenamed(object sender, RenamedEventArgs e)
+        {
+            HandleFileChange();
+        }
+
+        private void HandleFileChange()
+        {
+            lock (_watchLock)
+            {
+                if (_suppressWatch) return;
+
+                var currentHash = ComputeFileHashOrNull();
+
+                // 与基线比较；不一致说明被外部进程改动，告警并更新基线以避免重复提示。
+                if (!string.Equals(currentHash, _knownHash, StringComparison.Ordinal))
+                {
+                    _knownHash = currentHash;
+                    var message = currentHash == null
+                        ? "密码文件 password.txt 已被外部程序删除，可能被篡改。请重新设置密码。"
+                        : "密码文件 password.txt 已被外部程序修改，可能被篡改。请立即检查并重新设置密码。";
+                    ExternalChangeDetected?.Invoke(message);
+                }
+            }
+        }
+
+        private static string ComputeFileHashOrNull()
+        {
+            try
+            {
+                if (!File.Exists(PasswordPath)) return null;
+                return HashBytes(File.ReadAllBytes(PasswordPath));
+            }
+            catch
+            {
+                return null;
+            }
+        }
+
+        private static string HashBytes(byte[] data)
+        {
+            using (var sha = SHA256.Create())
+            {
+                return Convert.ToBase64String(sha.ComputeHash(data));
+            }
+        }
+
+        public void Dispose()
+        {
+            if (_watcher == null) return;
+            _watcher.EnableRaisingEvents = false;
+            _watcher.Dispose();
+            _watcher = null;
         }
     }
 }
