@@ -10,7 +10,7 @@
 
 ---
 
-![Beamgun 信息图](https://github.com/JLospinoso/beamgun/raw/master/Readme.png)
+![Beamgun 信息图](Readme.png)
 
 Beamgun 是一个 Windows 安全防护工具，用于检测 USB Rubber Ducky 键盘模拟攻击、LAN Turtle 恶意网络适配器插入等威胁，并在检测到攻击时自动锁定工作站。
 
