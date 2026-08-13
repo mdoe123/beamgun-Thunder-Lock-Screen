@@ -1,4 +1,4 @@
-﻿<Window x:Class="BeamgunApp.MainWindow"
+<Window x:Class="BeamgunApp.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -58,7 +58,7 @@
                                 <i:InvokeCommandAction Command="{Binding Path=DisableCommand}"/>
                             </i:EventTrigger>
                         </i:Interaction.Triggers>
-                        <TextBlock Name="DisableLogoffClickBlock">Disable for 30m.</TextBlock>
+                        <TextBlock Name="DisableLogoffClickBlock">禁用30分钟</TextBlock>
                     </Border>
                     <Border BorderThickness="1" 
                             Padding="2"
@@ -71,7 +71,7 @@
                                 <i:InvokeCommandAction Command="{Binding Path=ClearAlertsCommand}"/>
                             </i:EventTrigger>
                         </i:Interaction.Triggers>
-                        <TextBlock Name="ClearTextboxClickBox">Clear alerts</TextBlock>
+                        <TextBlock Name="ClearTextboxClickBox">清除告警</TextBlock>
                     </Border>
                     <Border BorderThickness="1" 
                             Padding="2"
@@ -84,7 +84,7 @@
                                 <i:InvokeCommandAction Command="{Binding Path=ResetCommand}"/>
                             </i:EventTrigger>
                         </i:Interaction.Triggers>
-                        <TextBlock Name="OptionsClickBox">Reset</TextBlock>
+                        <TextBlock Name="OptionsClickBox">重置</TextBlock>
                     </Border>
                     <Border BorderThickness="1" 
                             Padding="2"
@@ -97,26 +97,43 @@
                                 <i:InvokeCommandAction Command="{Binding Path=ExitCommand}"/>
                             </i:EventTrigger>
                         </i:Interaction.Triggers>
-                        <TextBlock Name="ExitClickBlock">Exit</TextBlock>
+                        <TextBlock Name="ExitClickBlock">退出</TextBlock>
+                    </Border>
+                    <Border BorderThickness="1" 
+                            Padding="2"
+                            CornerRadius="3"
+                            BorderBrush="DarkSlateGray"
+                            VerticalAlignment="Center" 
+                            HorizontalAlignment="Center">
+                        <i:Interaction.Triggers>
+                            <i:EventTrigger EventName="PreviewMouseDown">
+                                <i:InvokeCommandAction Command="{Binding Path=SetPasswordCommand}"/>
+                            </i:EventTrigger>
+                        </i:Interaction.Triggers>
+                        <TextBlock Name="SetPasswordClickBlock">设置密码</TextBlock>
                     </Border>
                     <StackPanel Orientation="Horizontal">
                         <CheckBox IsChecked="{Binding Path=BeamgunState.UsbMassStorageDisabled}" VerticalAlignment="Center" IsEnabled="{Binding Path=BeamgunState.IsAdmin}"/>
-                        <Label>Disable USB storage</Label>
+                        <Label>禁用USB存储</Label>
                     </StackPanel>
                 </StackPanel>
             </Grid>
             <StackPanel Grid.Row="2" HorizontalAlignment="Center" Orientation="Horizontal">
                 <StackPanel Orientation="Horizontal">
                     <CheckBox IsChecked="{Binding Path=BeamgunState.LockOnKeyboard}" VerticalAlignment="Center"/>
-                    <Label Content="Lock on keyboard"/>
+                    <Label Content="键盘插入时锁定"/>
                 </StackPanel>
                 <StackPanel Orientation="Horizontal">
                     <CheckBox IsChecked="{Binding Path=BeamgunState.LockOnMouse}" VerticalAlignment="Center"/>
-                    <Label Content="Lock on mouse"/>
+                    <Label Content="鼠标插入时锁定"/>
                 </StackPanel>
                 <StackPanel Orientation="Horizontal">
                     <CheckBox IsChecked="{Binding Path=BeamgunState.DisableNetworkAdapter}" VerticalAlignment="Center" IsEnabled="{Binding Path=BeamgunState.IsAdmin}"/>
-                    <Label>Disable new net adapters</Label>
+                    <Label>禁用新网络适配器</Label>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal">
+                    <CheckBox IsChecked="{Binding Path=BeamgunState.LockOnUsbDevice}" VerticalAlignment="Center"/>
+                    <Label Content="陌生设备插入时锁定"/>
                 </StackPanel>
             </StackPanel>
             <TextBox Grid.Row="3" 

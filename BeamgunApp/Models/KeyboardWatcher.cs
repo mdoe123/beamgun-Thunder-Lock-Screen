@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Management;
 
 namespace BeamgunApp.Models
@@ -7,7 +7,7 @@ namespace BeamgunApp.Models
     {
         private readonly ManagementEventWatcher _watcher;
 
-        public KeyboardWatcher(IBeamgunSettings settings, WorkstationLocker locker, Action<string> report, Action<string> alarm, Func<bool> disabled)
+        public KeyboardWatcher(IBeamgunSettings settings, ILocker locker, Action<string> report, Action<string> alarm, Func<bool> disabled)
         {
             var keyboardQuery = new WqlEventQuery("__InstanceCreationEvent", new TimeSpan(0, 0, 1), "TargetInstance isa \"Win32_Keyboard\"");
             _watcher = new ManagementEventWatcher(keyboardQuery);
@@ -15,22 +15,22 @@ namespace BeamgunApp.Models
             {
                 if (disabled()) return;
                 var obj = (ManagementBaseObject)args.NewEvent["TargetInstance"];
-                alarm($"Alerting on keyboard insertion: " +
+                alarm($"键盘插入告警：" +
                                    $"{obj["Name"]} " +
                                    $"{obj["Caption"]} " +
                                    $"{obj["Description"]} " +
                                    $"{obj["DeviceID"]}" +
                                    $"{obj["Layout"]} " +
-                                   $"{obj["PNPDeviceID"]}.");
+                                   $"{obj["PNPDeviceID"]}。");
                 if (!settings.LockOnKeyboard) return;
                 if (WhiteList.WhiteListed(obj))
                 {
-                    report($"Device is whitelisted, remove {obj["PNPDeviceID"]} from {WhiteList.WhiteFilename} if you've changed your mind.");
-                    return; 
+                    report($"设备在白名单中，如果改变主意请从 {WhiteList.WhiteFilename} 中移除 {obj["PNPDeviceID"]}。");
+                    return;
                 }
                 report(locker.Lock()
-                    ? "Successfully locked the workstation."
-                    : "Could not lock the workstation.");
+                    ? "已成功锁定工作站。"
+                    : "无法锁定工作站。");
 
             };
             _watcher.Start();

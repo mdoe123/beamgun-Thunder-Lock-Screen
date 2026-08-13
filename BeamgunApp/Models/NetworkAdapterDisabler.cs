@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Management;
 
 namespace BeamgunApp.Models
@@ -22,7 +22,7 @@ namespace BeamgunApp.Models
                 }
                 catch (ManagementException e)
                 {
-                    throw new NetworkAdapterDisablerException("Error disabling new network adapter.", e);
+                    throw new NetworkAdapterDisablerException("禁用新网络适配器时出错。", e);
                 }
             }
             return false;

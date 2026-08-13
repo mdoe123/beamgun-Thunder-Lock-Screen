@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Security.Principal;
 
 namespace BeamgunApp.Models
@@ -11,6 +11,7 @@ namespace BeamgunApp.Models
         bool LockOnKeyboard { get; set; }
         bool LockOnMouse { get; set; }
         bool DisableNetworkAdapter { get; set; }
+        bool LockOnUsbDevice { get; set; }
         uint StealFocusInterval { get; set; }
         Version LatestVersion { get; set; }
         string DownloadUrl { get; set; }
@@ -157,6 +158,17 @@ namespace BeamgunApp.Models
                 _backing.Set(DisableNetworkAdapterSubkey, value);
             }
         }
+        public bool LockOnUsbDevice
+        {
+            get
+            {
+                return _backing.GetWithDefault(LockOnUsbDeviceSubkey, LockOnUsbDeviceDefault);
+            }
+            set
+            {
+                _backing.Set(LockOnUsbDeviceSubkey, value);
+            }
+        }
         public string GraphicsTheme
         {
             get
@@ -199,6 +211,8 @@ namespace BeamgunApp.Models
         private const bool LockOnMouseDefault = true;
         private const string DisableNetworkAdapterSubkey = "DisableNetworkAdapter";
         private const bool DisableNetworkAdapterDefault = true;
+        private const string LockOnUsbDeviceSubkey = "LockOnUsbDevice";
+        private const bool LockOnUsbDeviceDefault = true;
         private const string StealFocusIntervalKey = "StealFocusInterval";
         private const uint StealFocusIntervalDefault = 10;
         private const string BeamgunIdKey = "BeamgunId";

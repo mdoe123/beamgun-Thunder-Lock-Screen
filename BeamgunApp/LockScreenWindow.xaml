@@ -1,0 +1,31 @@
+<Window x:Class="BeamgunApp.LockScreenWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Beamgun"
+        WindowStyle="None"
+        ResizeMode="NoResize"
+        WindowState="Maximized"
+        ShowInTaskbar="False"
+        Topmost="True"
+        Background="Black"
+        FontFamily="Lucida Sans Typewriter">
+    <Grid>
+        <Image x:Name="LockImage" Stretch="UniformToFill" />
+        <Grid Background="#CC000000">
+            <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center" Width="380">
+                <TextBlock x:Name="TimeText" Foreground="White" FontSize="18"
+                           TextAlignment="Center" Margin="0,0,0,10"/>
+                <TextBlock Text="工作站已被 Beamgun 锁定" Foreground="White" FontSize="26"
+                           TextAlignment="Center" Margin="0,0,0,6"/>
+                <TextBlock Text="检测到未授权设备插入，请输入解锁密码" Foreground="#CCCCCC" FontSize="14"
+                           TextAlignment="Center" Margin="0,0,0,20"/>
+                <PasswordBox x:Name="PasswordBox" Height="32" FontSize="16"
+                             VerticalContentAlignment="Center" Margin="0,0,0,12"/>
+                <Button x:Name="UnlockButton" Content="解锁" Height="36" FontSize="16"
+                        Click="UnlockButton_Click" IsDefault="True"/>
+                <TextBlock x:Name="ErrorText" Foreground="#FF6B6B" FontSize="14"
+                           TextAlignment="Center" Margin="0,12,0,0"/>
+            </StackPanel>
+        </Grid>
+    </Grid>
+</Window>

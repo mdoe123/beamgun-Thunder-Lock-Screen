@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.ComponentModel;
 using System.Reflection;
 using System.Runtime.CompilerServices;
@@ -85,6 +85,15 @@ namespace BeamgunApp.Models
             {
                 _settings.DisableNetworkAdapter = value;
                 OnPropertyChanged(nameof(DisableNetworkAdapter));
+            }
+        }
+        public bool LockOnUsbDevice
+        {
+            get { return _settings.LockOnUsbDevice; }
+            set
+            {
+                _settings.LockOnUsbDevice = value;
+                OnPropertyChanged(nameof(LockOnUsbDevice));
             }
         }
         public bool IsAdmin => _settings.IsAdmin;

@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Diagnostics;
 using System.Runtime.InteropServices;
 using System.Threading;
@@ -50,7 +50,7 @@ namespace BeamgunApp.Models
             }
             else
             {
-                throw new Exception("Hook has already been set.");
+                throw new Exception("键盘钩子已设置。");
             }
         }
 

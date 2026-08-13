@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Management;
 using System.Threading;
 
@@ -16,13 +16,13 @@ namespace BeamgunApp.Models
             _watcher.EventArrived += (caller, args) =>
             {
                 var obj = (ManagementBaseObject)args.NewEvent["TargetInstance"];
-                var alertMessage = $"Alerting on network adapter insertion: {obj["Description"]} (Device ID {obj["DeviceID"]}) ";
+                var alertMessage = $"网络适配器插入告警：{obj["Description"]}（设备 ID {obj["DeviceID"]}）";
                 if (disabled()) return;
                 alarm(alertMessage);
                 Triggered = settings.DisableNetworkAdapter;
                 if (Triggered)
                 {
-                    report($"Disabling {obj["Description"]} every {settings.DisableNetworkAdapterInterval} ms until Reset.");
+                    report($"每 {settings.DisableNetworkAdapterInterval} 毫秒禁用一次 {obj["Description"]}，直到重置。");
                 }
                 while (Triggered)
                 {
@@ -30,7 +30,7 @@ namespace BeamgunApp.Models
                     {
                         if (!networkAdapterDisabler.Disable(obj["DeviceID"].ToString()))
                         {
-                            report($"DANGER: Unable to disable {obj["AdapterType"]}!");
+                            report($"危险：无法禁用 {obj["AdapterType"]}！");
                         }
                         Thread.Sleep((int) settings.DisableNetworkAdapterInterval);
                     }

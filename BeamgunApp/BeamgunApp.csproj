@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
@@ -102,6 +102,7 @@
     <Compile Include="Commands\DisableCommand.cs" />
     <Compile Include="Commands\DeactivatedCommand.cs" />
     <Compile Include="Commands\TrayIconCommand.cs" />
+    <Compile Include="Commands\SetPasswordCommand.cs" />
     <Compile Include="Controls\TextBoxBehavior.cs" />
     <Compile Include="Models\BeamgunSettings.cs" />
     <Compile Include="Models\Disabler.cs" />
@@ -116,6 +117,11 @@
     <Compile Include="Models\VersionChecker.cs" />
     <Compile Include="Models\VersionCheckerTimer.cs" />
     <Compile Include="Models\WorkstationLocker.cs" />
+    <Compile Include="Models\AttackLogger.cs" />
+    <Compile Include="Models\LockScreenLocker.cs" />
+    <Compile Include="Models\PasswordStore.cs" />
+    <Compile Include="Models\DeviceEjector.cs" />
+    <Compile Include="Models\UsbDeviceWatcher.cs" />
     <Compile Include="Properties\Annotations.cs" />
     <Compile Include="Models\BeamgunState.cs" />
     <Compile Include="ViewModel\BeamgunViewModel.cs" />
@@ -130,6 +136,30 @@
     </Compile>
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Page Include="LockScreenWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Compile Include="LockScreenWindow.xaml.cs">
+      <DependentUpon>LockScreenWindow.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Page Include="SetPasswordWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Compile Include="SetPasswordWindow.xaml.cs">
+      <DependentUpon>SetPasswordWindow.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Page Include="AuthorizeDeviceWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Compile Include="AuthorizeDeviceWindow.xaml.cs">
+      <DependentUpon>AuthorizeDeviceWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
   </ItemGroup>

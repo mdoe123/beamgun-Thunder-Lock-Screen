@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Threading;
 using System.Windows;
 
@@ -34,10 +34,10 @@ namespace BeamgunApp.Models
             _beamgunState.SetGraphicsDisabled();
             var monitor = new Thread(() =>
             {
-                _beamgunState.AppendToAlert($"Beamgun is disabled until {dateTime}");
+                _beamgunState.AppendToAlert($"Beamgun 已禁用至 {dateTime}");
                 Thread.Sleep(dateTime - DateTime.Now);
                 Enable();
-                _beamgunState.AppendToAlert($"Beamgun is enabled.");
+                _beamgunState.AppendToAlert($"Beamgun 已启用。");
             });
             monitor.Start();
         }

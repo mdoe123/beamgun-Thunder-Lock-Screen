@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using Microsoft.Win32;
 
 namespace BeamgunApp.Models
@@ -19,7 +19,7 @@ namespace BeamgunApp.Models
         public const string BeamgunBaseKey = @"HKEY_CURRENT_USER\SOFTWARE\Beamgun";
         public RegistryBackedDictionary()
         {
-          Set(BeamgunBaseKey, ""); // Make sure registry key exists
+          Set(BeamgunBaseKey, ""); // 确保注册表项存在
         }
         public string GetWithDefault(string key, string defaultValue)
         {

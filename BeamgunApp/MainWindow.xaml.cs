@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.ComponentModel;
 using System.Threading;
 using System.Windows;
@@ -26,7 +26,7 @@ namespace BeamgunApp
             _appMutex  = new Mutex(true, "beamgun.lospi.net");
             if (!_appMutex.WaitOne(0))
             {
-                MessageBox.Show(this, "Beamgun is already running.", "Beamgun", 
+                MessageBox.Show(this, "Beamgun 已在运行中。", "Beamgun",
                     MessageBoxButton.OK, MessageBoxImage.Information);
                 Application.Current.Shutdown();
             }

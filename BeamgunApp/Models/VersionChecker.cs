@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Diagnostics;
 using System.IO;
 using System.Net;
@@ -27,7 +27,7 @@ namespace BeamgunApp.Models
                     }
                     catch (Exception e)
                     {
-                        Debug.WriteLine($"Unable to retrieve version information: {e.Message}");
+                        Debug.WriteLine($"无法获取版本信息：{e.Message}");
                     }
                 });
             }

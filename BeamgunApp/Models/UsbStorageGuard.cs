@@ -1,4 +1,4 @@
-﻿using Microsoft.Win32;
+using Microsoft.Win32;
 
 namespace BeamgunApp.Models
 {
@@ -24,7 +24,7 @@ namespace BeamgunApp.Models
 
         public void Dispose()
         {
-            //NOP
+            // 空操作
         }
 
         private readonly IBeamgunSettings _settings;

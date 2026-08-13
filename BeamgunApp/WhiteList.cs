@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -25,7 +25,7 @@ namespace BeamgunApp
                 }
             }
             catch (Exception e) {
-                System.Console.WriteLine($"Failed to read {WhiteFilename}: {e.Message}.");
+                System.Console.WriteLine($"读取 {WhiteFilename} 失败：{e.Message}。");
             }
 
             if (whitelist.Contains(obj["PNPDeviceID"]))
@@ -34,6 +34,18 @@ namespace BeamgunApp
             }
 
             return result;
+        }
+
+        internal static void Add(string pnpDeviceId)
+        {
+            try
+            {
+                File.AppendAllText(WhiteFilename, pnpDeviceId + Environment.NewLine, System.Text.Encoding.UTF8);
+            }
+            catch (Exception e)
+            {
+                System.Console.WriteLine($"写入 {WhiteFilename} 失败：{e.Message}。");
+            }
         }
     }
 }
