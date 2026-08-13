@@ -101,7 +101,27 @@ HID\VID_XXXX&PID_XXXXX&MI_XX&COLXX\XXXXXXXXXXXXXXXXX
 从源码构建
 ==
 
+### 方式一：使用构建脚本（推荐）
+
+本仓库提供了 `build.ps1` 脚本，会自动定位 MSBuild 并解决 .NET Framework 参考程序集问题（适用于只安装了 .NET Framework 4.8.1 目标包、缺少 4.0 / 4.6.1 目标包的机器）：
+
+```powershell
+.\build.ps1                              # Debug / AnyCPU
+.\build.ps1 -Configuration Release       # Release 构建
+```
+
+脚本会：
+
+1. 通过 vswhere 或已知路径定位 MSBuild；
+2. 优先使用 `packages\Microsoft.NETFramework.ReferenceAssemblies.net461.*` 里的参考程序集（通过 `FrameworkPathOverride` 指定），缺失时回退到系统已装的目标包；
+3. 构建 `BeamgunApp\BeamgunApp.csproj` 主程序。
+
+若脚本因执行策略被禁止，可用 `powershell -ExecutionPolicy Bypass -File .\build.ps1` 运行。
+
+### 方式二：使用 Visual Studio
+
 克隆仓库：
+
 ```sh
 git clone git@github.com:JLospinoso/beamgun.git
 ```
