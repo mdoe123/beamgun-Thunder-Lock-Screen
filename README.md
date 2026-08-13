@@ -1,3 +1,15 @@
+# 雷霆锁屏
+
+雷霆锁屏（Thunder Lock Screen）是基于 [Beamgun](https://github.com/JLospinoso/beamgun) 增强的 Windows 安全防护工具。它在原有键盘/鼠标/网络攻击检测的基础上，新增了一套完整的锁屏防护能力：
+
+- **全屏锁定**：攻击或陌生设备插入时全屏显示图片并锁定，需输入密码解锁。
+- **自定义锁屏文本**：通过 `locktext.txt` 自定义锁屏标题与提示语。
+- **陌生设备拦截**：非白名单 USB 设备插入时自动锁定，解锁后询问授权，未授权则安全弹出设备。
+- **密码安全**：解锁密码以 PBKDF2 加盐哈希存储，并实时监测密码文件防篡改。
+- **已授权设备管理**：通过「管理设备」窗口查看、删除白名单设备。
+
+---
+
 ![Beamgun 信息图](https://github.com/JLospinoso/beamgun/raw/master/Readme.png)
 
 Beamgun 是一个 Windows 安全防护工具，用于检测 USB Rubber Ducky 键盘模拟攻击、LAN Turtle 恶意网络适配器插入等威胁，并在检测到攻击时自动锁定工作站。
