@@ -119,6 +119,7 @@
     <Compile Include="Models\WorkstationLocker.cs" />
     <Compile Include="Models\AttackLogger.cs" />
     <Compile Include="Models\LockScreenLocker.cs" />
+    <Compile Include="Models\LockScreenText.cs" />
     <Compile Include="Models\PasswordStore.cs" />
     <Compile Include="Models\DeviceEjector.cs" />
     <Compile Include="Models\UsbDeviceWatcher.cs" />

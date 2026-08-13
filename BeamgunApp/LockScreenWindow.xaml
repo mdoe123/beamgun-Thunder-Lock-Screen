@@ -15,9 +15,9 @@
             <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center" Width="380">
                 <TextBlock x:Name="TimeText" Foreground="White" FontSize="18"
                            TextAlignment="Center" Margin="0,0,0,10"/>
-                <TextBlock Text="工作站已被 Beamgun 锁定" Foreground="White" FontSize="26"
+                <TextBlock x:Name="TitleText" Text="工作站已被 Beamgun 锁定" Foreground="White" FontSize="26"
                            TextAlignment="Center" Margin="0,0,0,6"/>
-                <TextBlock Text="检测到未授权设备插入，请输入解锁密码" Foreground="#CCCCCC" FontSize="14"
+                <TextBlock x:Name="MessageText" Text="检测到未授权设备插入，请输入解锁密码" Foreground="#CCCCCC" FontSize="14"
                            TextAlignment="Center" Margin="0,0,0,20"/>
                 <PasswordBox x:Name="PasswordBox" Height="32" FontSize="16"
                              VerticalContentAlignment="Center" Margin="0,0,0,12"/>

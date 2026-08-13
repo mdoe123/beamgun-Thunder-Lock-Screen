@@ -25,6 +25,7 @@ namespace BeamgunApp
 
             TimeText.Text = $"锁定时间：{DateTime.Now:yyyy-MM-dd HH:mm:ss}";
             LoadImage();
+            LoadLockText();
             Loaded += (s, e) => PasswordBox.Focus();
         }
 
@@ -49,6 +50,13 @@ namespace BeamgunApp
             {
                 // 图片加载失败时保留纯黑背景。
             }
+        }
+
+        private void LoadLockText()
+        {
+            var lockText = new LockScreenText();
+            TitleText.Text = lockText.Title;
+            MessageText.Text = lockText.Message;
         }
 
         private void UnlockButton_Click(object sender, RoutedEventArgs e)
