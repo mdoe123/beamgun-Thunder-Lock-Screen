@@ -4,7 +4,7 @@ using BeamgunApp.Models;
 namespace BeamgunApp
 {
     /// <summary>
-    /// 设置解锁密码的对话框，密码以 MD5 形式保存到 password.txt。
+    /// 设置解锁密码的对话框，密码以 PBKDF2 加盐哈希形式保存到 password.txt。
     /// </summary>
     public partial class SetPasswordWindow : Window
     {
