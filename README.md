@@ -53,6 +53,8 @@ USB\VID_XXXX&PID_XXXX&MI_XX\XXXXXXXXXXXXXXXXXXXXXXXX
 HID\VID_XXXX&PID_XXXXX&MI_XX&COLXX\XXXXXXXXXXXXXXXXX
 ```
 
+已授权设备可通过主窗口的「管理设备」按钮查看和删除，也可以直接编辑 `whitelist.cfg`（保存后对下一次设备插入生效，无需重启）。
+
 全屏锁定
 ==
 
@@ -108,6 +110,7 @@ HID\VID_XXXX&PID_XXXXX&MI_XX&COLXX\XXXXXXXXXXXXXXXXX
 | 重置 | 重置告警状态，恢复正常监控 |
 | 退出 | 退出程序 |
 | 设置密码 | 设置/修改解锁密码 |
+| 管理设备 | 查看、删除已授权设备（白名单） |
 | 禁用USB存储 | 切换 USB 大容量存储设备的启用/禁用（需管理员权限） |
 | 键盘插入时锁定 | 开关：键盘插入时触发全屏锁定 |
 | 鼠标插入时锁定 | 开关：鼠标插入时触发全屏锁定 |
@@ -263,7 +266,7 @@ Beamgun 可以在普通用户权限和管理员权限下运行，但会请求当
 
 版本历史
 ==
-* 自定义分支：新增全屏锁定功能（`sp.png` + 密码解锁）、攻击日志文件（`beamgun.log`）、密码管理（`password.txt`）、界面与代码中文化。新增陌生设备拦截功能（非白名单 USB 设备插入时锁定，解锁后询问授权，不授权则安全弹出）。新增密码文件防篡改监测（`password.txt` 被外部进程改动时弹窗告警）。新增自定义锁屏文本（`locktext.txt` 定义主标题与提示语）。
+* 自定义分支：新增全屏锁定功能（`sp.png` + 密码解锁）、攻击日志文件（`beamgun.log`）、密码管理（`password.txt`）、界面与代码中文化。新增陌生设备拦截功能（非白名单 USB 设备插入时锁定，解锁后询问授权，不授权则安全弹出）。新增密码文件防篡改监测（`password.txt` 被外部进程改动时弹窗告警）。新增自定义锁屏文本（`locktext.txt` 定义主标题与提示语）。新增已授权设备界面化管理（`管理设备` 窗口查看/删除白名单）。
 
 * [BeamgunInstaller-0.2.4.msi](https://s3.amazonaws.com/net.lospi.beamgun/BeamgunInstaller-0.2.4.msi) | [BeamgunApp-0.2.4.zip](https://s3.amazonaws.com/net.lospi.beamgun/BeamgunApp-0.2.4.zip)：修复了在注册表根键不存在时便携版 .exe 在某些情况下无法启动的问题。
 

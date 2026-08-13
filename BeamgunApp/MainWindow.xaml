@@ -112,6 +112,19 @@
                         </i:Interaction.Triggers>
                         <TextBlock Name="SetPasswordClickBlock">设置密码</TextBlock>
                     </Border>
+                    <Border BorderThickness="1" 
+                            Padding="2"
+                            CornerRadius="3"
+                            BorderBrush="DarkSlateGray"
+                            VerticalAlignment="Center" 
+                            HorizontalAlignment="Center">
+                        <i:Interaction.Triggers>
+                            <i:EventTrigger EventName="PreviewMouseDown">
+                                <i:InvokeCommandAction Command="{Binding Path=ManageWhitelistCommand}"/>
+                            </i:EventTrigger>
+                        </i:Interaction.Triggers>
+                        <TextBlock Name="ManageWhitelistClickBlock">管理设备</TextBlock>
+                    </Border>
                     <StackPanel Orientation="Horizontal">
                         <CheckBox IsChecked="{Binding Path=BeamgunState.UsbMassStorageDisabled}" VerticalAlignment="Center" IsEnabled="{Binding Path=BeamgunState.IsAdmin}"/>
                         <Label>禁用USB存储</Label>

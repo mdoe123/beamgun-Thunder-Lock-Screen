@@ -15,6 +15,7 @@ namespace BeamgunApp.ViewModel
         void DisableUntil(DateTime minutes);
         void ClearAlerts();
         void SetPassword();
+        void ManageWhitelist();
     }
 
     public class BeamgunViewModel : IDisposable, IViewModel
@@ -27,6 +28,7 @@ namespace BeamgunApp.ViewModel
         public ICommand ExitCommand { get; }
         public ICommand ClearAlertsCommand { get; }
         public ICommand SetPasswordCommand { get; }
+        public ICommand ManageWhitelistCommand { get; }
         public Action StealFocus { get; set; }
 
         public bool IsVisible
@@ -69,6 +71,7 @@ namespace BeamgunApp.ViewModel
             ExitCommand = new ExitCommand(this);
             ClearAlertsCommand = new ClearAlertsCommand(this);
             SetPasswordCommand = new SetPasswordCommand(this);
+            ManageWhitelistCommand = new ManageWhitelistCommand(this);
             _keystrokeHooker = InstallKeystrokeHooker();
             _usbStorageGuard = InstallUsbStorageGuard(beamgunSettings);
             _alarm = InstallAlarm(beamgunSettings);
@@ -201,6 +204,12 @@ namespace BeamgunApp.ViewModel
                 BeamgunState.AppendToAlert("解锁密码已更新。");
                 _attackLogger.Log("解锁密码已更新。");
             }
+        }
+
+        public void ManageWhitelist()
+        {
+            var window = new ManageWhitelistWindow();
+            window.ShowDialog();
         }
 
         /// <summary>

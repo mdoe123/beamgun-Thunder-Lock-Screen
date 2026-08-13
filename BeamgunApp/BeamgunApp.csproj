@@ -103,6 +103,7 @@
     <Compile Include="Commands\DeactivatedCommand.cs" />
     <Compile Include="Commands\TrayIconCommand.cs" />
     <Compile Include="Commands\SetPasswordCommand.cs" />
+    <Compile Include="Commands\ManageWhitelistCommand.cs" />
     <Compile Include="Controls\TextBoxBehavior.cs" />
     <Compile Include="Models\BeamgunSettings.cs" />
     <Compile Include="Models\Disabler.cs" />
@@ -161,6 +162,14 @@
     </Page>
     <Compile Include="AuthorizeDeviceWindow.xaml.cs">
       <DependentUpon>AuthorizeDeviceWindow.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Page Include="ManageWhitelistWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Compile Include="ManageWhitelistWindow.xaml.cs">
+      <DependentUpon>ManageWhitelistWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
   </ItemGroup>
