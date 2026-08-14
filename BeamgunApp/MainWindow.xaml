@@ -5,161 +5,125 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:viewModel="clr-namespace:BeamgunApp.ViewModel"
         d:DataContext="{d:DesignInstance viewModel:BeamgunViewModel}"
-        xmlns:tb="http://www.hardcodet.net/taskbar" 
+        xmlns:tb="http://www.hardcodet.net/taskbar"
         xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
         xmlns:controls="clr-namespace:BeamgunApp.Controls"
         mc:Ignorable="d"
         Title="Beamgun"
-        Height="480" Width="640" 
-        ResizeMode="NoResize" 
+        Height="500" Width="680"
+        ResizeMode="NoResize"
         WindowStyle="None"
         ShowInTaskbar="False"
-        FontFamily="Lucida Sans Typewriter"
+        Background="#1E1E1E"
+        Foreground="#E8E8E8"
+        FontFamily="Microsoft YaHei UI"
         WindowState="{Binding BeamgunState.MainWindowState, Mode=TwoWay}"
         Visibility="{Binding BeamgunState.MainWindowVisibility, Mode=TwoWay}">
+    <Window.Resources>
+        <Style x:Key="ModernButton" TargetType="Button">
+            <Setter Property="Background" Value="#2D2D30"/>
+            <Setter Property="Foreground" Value="#E8E8E8"/>
+            <Setter Property="BorderBrush" Value="#3F3F46"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="Padding" Value="14,7"/>
+            <Setter Property="Margin" Value="3"/>
+            <Setter Property="FontSize" Value="13"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border x:Name="Bd"
+                                Background="{TemplateBinding Background}"
+                                BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="{TemplateBinding BorderThickness}"
+                                CornerRadius="6"
+                                Padding="{TemplateBinding Padding}">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="Bd" Property="Background" Value="#3E3E42"/>
+                                <Setter TargetName="Bd" Property="BorderBrush" Value="#6A6A70"/>
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter TargetName="Bd" Property="Background" Value="#1A1A1C"/>
+                            </Trigger>
+                            <Trigger Property="IsEnabled" Value="False">
+                                <Setter Property="Foreground" Value="#6A6A6A"/>
+                                <Setter TargetName="Bd" Property="Background" Value="#252526"/>
+                                <Setter TargetName="Bd" Property="BorderBrush" Value="#2F2F33"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style x:Key="Card" TargetType="Border">
+            <Setter Property="Background" Value="#252526"/>
+            <Setter Property="BorderBrush" Value="#333337"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="CornerRadius" Value="8"/>
+            <Setter Property="Padding" Value="14"/>
+            <Setter Property="Margin" Value="0,6,0,6"/>
+        </Style>
+    </Window.Resources>
+
     <i:Interaction.Triggers>
         <i:EventTrigger EventName="Deactivated">
             <i:InvokeCommandAction Command="{Binding Path=LoseFocusCommand}"/>
         </i:EventTrigger>
     </i:Interaction.Triggers>
-    <Border BorderThickness="20,20,20,0">
-        <Grid>
-            <Grid.RowDefinitions>
-                <RowDefinition Height="50px" />
-                <RowDefinition Height="25px" />
-                <RowDefinition Height="25px" />
-                <RowDefinition Height="*" />
-                <RowDefinition Height="22" />
-                <RowDefinition Height="0" />
-            </Grid.RowDefinitions>
-            <Grid Grid.Row="0" HorizontalAlignment="Center">
-                <StackPanel Orientation="Horizontal">
-                    <Image RenderOptions.BitmapScalingMode="HighQuality" Source="{Binding Path=BeamgunState.BannerPath}"/>
-                </StackPanel>
-            </Grid>
-            <Grid Grid.Row="1" HorizontalAlignment="Center">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*" />
-                </Grid.ColumnDefinitions>
-                <StackPanel Grid.Column="0" Name="Pseudobuttons" Orientation="Horizontal">
-                    <StackPanel.Resources>
-                        <Style TargetType="{x:Type Border}">
-                            <Setter Property="Margin" Value="5,0,5,0"/>
-                        </Style>
-                    </StackPanel.Resources>
-                    <Border BorderThickness="1" 
-                            Padding="2"
-                            CornerRadius="3"
-                            BorderBrush="DarkSlateGray"
-                            VerticalAlignment="Center" 
-                            HorizontalAlignment="Center">
-                        <i:Interaction.Triggers>
-                            <i:EventTrigger EventName="PreviewMouseDown">
-                                <i:InvokeCommandAction Command="{Binding Path=DisableCommand}"/>
-                            </i:EventTrigger>
-                        </i:Interaction.Triggers>
-                        <TextBlock Name="DisableLogoffClickBlock">禁用30分钟</TextBlock>
-                    </Border>
-                    <Border BorderThickness="1" 
-                            Padding="2"
-                            CornerRadius="3"
-                            BorderBrush="DarkSlateGray"
-                            VerticalAlignment="Center" 
-                            HorizontalAlignment="Center">
-                        <i:Interaction.Triggers>
-                            <i:EventTrigger EventName="PreviewMouseDown">
-                                <i:InvokeCommandAction Command="{Binding Path=ClearAlertsCommand}"/>
-                            </i:EventTrigger>
-                        </i:Interaction.Triggers>
-                        <TextBlock Name="ClearTextboxClickBox">清除告警</TextBlock>
-                    </Border>
-                    <Border BorderThickness="1" 
-                            Padding="2"
-                            CornerRadius="3"
-                            BorderBrush="DarkSlateGray"
-                            VerticalAlignment="Center" 
-                            HorizontalAlignment="Center">
-                        <i:Interaction.Triggers>
-                            <i:EventTrigger EventName="PreviewMouseDown">
-                                <i:InvokeCommandAction Command="{Binding Path=ResetCommand}"/>
-                            </i:EventTrigger>
-                        </i:Interaction.Triggers>
-                        <TextBlock Name="OptionsClickBox">重置</TextBlock>
-                    </Border>
-                    <Border BorderThickness="1" 
-                            Padding="2"
-                            CornerRadius="3"
-                            BorderBrush="DarkSlateGray"
-                            VerticalAlignment="Center" 
-                            HorizontalAlignment="Center">
-                        <i:Interaction.Triggers>
-                            <i:EventTrigger EventName="PreviewMouseDown">
-                                <i:InvokeCommandAction Command="{Binding Path=ExitCommand}"/>
-                            </i:EventTrigger>
-                        </i:Interaction.Triggers>
-                        <TextBlock Name="ExitClickBlock">退出</TextBlock>
-                    </Border>
-                    <Border BorderThickness="1" 
-                            Padding="2"
-                            CornerRadius="3"
-                            BorderBrush="DarkSlateGray"
-                            VerticalAlignment="Center" 
-                            HorizontalAlignment="Center">
-                        <i:Interaction.Triggers>
-                            <i:EventTrigger EventName="PreviewMouseDown">
-                                <i:InvokeCommandAction Command="{Binding Path=SetPasswordCommand}"/>
-                            </i:EventTrigger>
-                        </i:Interaction.Triggers>
-                        <TextBlock Name="SetPasswordClickBlock">设置密码</TextBlock>
-                    </Border>
-                    <Border BorderThickness="1" 
-                            Padding="2"
-                            CornerRadius="3"
-                            BorderBrush="DarkSlateGray"
-                            VerticalAlignment="Center" 
-                            HorizontalAlignment="Center">
-                        <i:Interaction.Triggers>
-                            <i:EventTrigger EventName="PreviewMouseDown">
-                                <i:InvokeCommandAction Command="{Binding Path=ManageWhitelistCommand}"/>
-                            </i:EventTrigger>
-                        </i:Interaction.Triggers>
-                        <TextBlock Name="ManageWhitelistClickBlock">管理设备</TextBlock>
-                    </Border>
-                    <StackPanel Orientation="Horizontal">
-                        <CheckBox IsChecked="{Binding Path=BeamgunState.UsbMassStorageDisabled}" VerticalAlignment="Center" IsEnabled="{Binding Path=BeamgunState.IsAdmin}"/>
-                        <Label>禁用USB存储</Label>
-                    </StackPanel>
-                </StackPanel>
-            </Grid>
-            <StackPanel Grid.Row="2" HorizontalAlignment="Center" Orientation="Horizontal">
-                <StackPanel Orientation="Horizontal">
-                    <CheckBox IsChecked="{Binding Path=BeamgunState.LockOnKeyboard}" VerticalAlignment="Center"/>
-                    <Label Content="键盘插入时锁定"/>
-                </StackPanel>
-                <StackPanel Orientation="Horizontal">
-                    <CheckBox IsChecked="{Binding Path=BeamgunState.LockOnMouse}" VerticalAlignment="Center"/>
-                    <Label Content="鼠标插入时锁定"/>
-                </StackPanel>
-                <StackPanel Orientation="Horizontal">
-                    <CheckBox IsChecked="{Binding Path=BeamgunState.DisableNetworkAdapter}" VerticalAlignment="Center" IsEnabled="{Binding Path=BeamgunState.IsAdmin}"/>
-                    <Label>禁用新网络适配器</Label>
-                </StackPanel>
-                <StackPanel Orientation="Horizontal">
-                    <CheckBox IsChecked="{Binding Path=BeamgunState.LockOnUsbDevice}" VerticalAlignment="Center"/>
-                    <Label Content="陌生设备插入时锁定"/>
-                </StackPanel>
-                <StackPanel Orientation="Horizontal">
-                    <CheckBox IsChecked="{Binding Path=BeamgunState.StartWithWindows}" VerticalAlignment="Center" IsEnabled="{Binding Path=BeamgunState.IsAdmin}"/>
-                    <Label Content="开机自启动"/>
-                </StackPanel>
-            </StackPanel>
-            <TextBox Grid.Row="3" 
-                     controls:TextBoxBehavior.ScrollOnTextChanged="True"
-                     AcceptsReturn="True" VerticalScrollBarVisibility="Visible" 
+
+    <Grid Margin="18">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="0"/>
+        </Grid.RowDefinitions>
+
+        <Image Grid.Row="0" HorizontalAlignment="Center"
+               RenderOptions.BitmapScalingMode="HighQuality"
+               Source="{Binding Path=BeamgunState.BannerPath}"/>
+
+        <Border Grid.Row="1" Style="{StaticResource Card}">
+            <WrapPanel HorizontalAlignment="Center">
+                <Button Style="{StaticResource ModernButton}" Command="{Binding DisableCommand}" Content="禁用30分钟"/>
+                <Button Style="{StaticResource ModernButton}" Command="{Binding ClearAlertsCommand}" Content="清除告警"/>
+                <Button Style="{StaticResource ModernButton}" Command="{Binding ResetCommand}" Content="重置"/>
+                <Button Style="{StaticResource ModernButton}" Command="{Binding SetPasswordCommand}" Content="设置密码"/>
+                <Button Style="{StaticResource ModernButton}" Command="{Binding ManageWhitelistCommand}" Content="管理设备"/>
+                <Button Style="{StaticResource ModernButton}" Command="{Binding ExitCommand}" Content="退出"/>
+            </WrapPanel>
+        </Border>
+
+        <Border Grid.Row="2" Style="{StaticResource Card}">
+            <WrapPanel HorizontalAlignment="Center">
+                <CheckBox IsChecked="{Binding Path=BeamgunState.LockOnKeyboard}" VerticalAlignment="Center" Margin="6,4" Content="键盘插入时锁定"/>
+                <CheckBox IsChecked="{Binding Path=BeamgunState.LockOnMouse}" VerticalAlignment="Center" Margin="6,4" Content="鼠标插入时锁定"/>
+                <CheckBox IsChecked="{Binding Path=BeamgunState.LockOnUsbDevice}" VerticalAlignment="Center" Margin="6,4" Content="陌生设备插入时锁定"/>
+                <CheckBox IsChecked="{Binding Path=BeamgunState.DisableNetworkAdapter}" VerticalAlignment="Center" Margin="6,4" Content="禁用新网络适配器" IsEnabled="{Binding Path=BeamgunState.IsAdmin}"/>
+                <CheckBox IsChecked="{Binding Path=BeamgunState.UsbMassStorageDisabled}" VerticalAlignment="Center" Margin="6,4" Content="禁用USB存储" IsEnabled="{Binding Path=BeamgunState.IsAdmin}"/>
+                <CheckBox IsChecked="{Binding Path=BeamgunState.StartWithWindows}" VerticalAlignment="Center" Margin="6,4" Content="开机自启动" IsEnabled="{Binding Path=BeamgunState.IsAdmin}"/>
+            </WrapPanel>
+        </Border>
+
+        <Border Grid.Row="3" Style="{StaticResource Card}" Padding="6">
+            <TextBox controls:TextBoxBehavior.ScrollOnTextChanged="True"
+                     AcceptsReturn="True" VerticalScrollBarVisibility="Visible"
                      TextWrapping="Wrap" IsReadOnly="True"
+                     Background="Transparent" Foreground="#C8C8C8" BorderThickness="0"
                      Text="{Binding BeamgunState.AlertLog}"/>
-            <Label Grid.Row="4" Grid.Column="0" FontSize="10" HorizontalAlignment="Center" Content="{Binding BeamgunState.VersionInfo}"></Label>
-            <tb:TaskbarIcon Name="Taskbar" Grid.Row="5" ToolTipText="Beamgun" IconSource="{Binding BeamgunState.TrayIconPath}" LeftClickCommand="{Binding TrayIconCommand}"/>
-        </Grid>
-    </Border>
+        </Border>
+
+        <Label Grid.Row="4" FontSize="10" Foreground="#8A8A8A" HorizontalAlignment="Center"
+               Content="{Binding BeamgunState.VersionInfo}"/>
+
+        <tb:TaskbarIcon Grid.Row="5" Name="Taskbar" ToolTipText="Beamgun"
+                        IconSource="{Binding BeamgunState.TrayIconPath}"
+                        LeftClickCommand="{Binding TrayIconCommand}"/>
+    </Grid>
 </Window>
