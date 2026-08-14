@@ -67,6 +67,7 @@ namespace BeamgunApp.ViewModel
             _lockScreen = new LockScreenLocker(_passwordStore, _attackLogger);
             _lockScreen.Unlocked += Reset;
             _lockScreen.DeviceUnlocked += OnDeviceUnlocked;
+            _workstationLocker = new WorkstationLocker();
 
             BeamgunState.Disabler = new Disabler(BeamgunState);
             BeamgunState.Disabler.Enable();
@@ -181,10 +182,44 @@ namespace BeamgunApp.ViewModel
             var keystrokeHooker = new KeystrokeHooker();
             keystrokeHooker.Callback += key =>
             {
+                // 自定义锁屏显示期间，检测到敏感操作（Win 键、Alt+Tab、Alt+Esc 等）则触发系统锁屏。
+                if (_lockScreen.IsVisible && IsSensitiveKey(key))
+                {
+                    _attackLogger.Log("锁屏期间检测到敏感操作，已触发系统锁屏。");
+                    _workstationLocker.Lock();
+                    return;
+                }
+
                 if (!_alarm.Triggered) return;
                 BeamgunState.AppendToKeyLog(converter.Convert(key));
             };
             return keystrokeHooker;
+        }
+
+        [System.Runtime.InteropServices.DllImport("user32.dll")]
+        private static extern short GetAsyncKeyState(int vKey);
+
+        private const int VkMenu = 0x12;
+        private const int VkControl = 0x11;
+
+        /// <summary>
+        /// 判断是否为需要触发系统锁屏的敏感操作按键。
+        /// </summary>
+        private bool IsSensitiveKey(System.Windows.Forms.Keys key)
+        {
+            if (key == System.Windows.Forms.Keys.LWin || key == System.Windows.Forms.Keys.RWin)
+                return true;
+
+            var altDown = (GetAsyncKeyState(VkMenu) & 0x8000) != 0;
+            var ctrlDown = (GetAsyncKeyState(VkControl) & 0x8000) != 0;
+
+            if (altDown && (key == System.Windows.Forms.Keys.Tab || key == System.Windows.Forms.Keys.Escape))
+                return true;
+
+            if (ctrlDown && key == System.Windows.Forms.Keys.Escape)
+                return true;
+
+            return false;
         }
         public void DoStealFocus()
         {
@@ -314,5 +349,6 @@ namespace BeamgunApp.ViewModel
         private readonly LockScreenLocker _lockScreen;
         private readonly DeviceEjector _deviceEjector;
         private readonly AutoStartManager _autoStartManager;
+        private readonly WorkstationLocker _workstationLocker;
     }
 }
