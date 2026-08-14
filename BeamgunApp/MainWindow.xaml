@@ -148,6 +148,10 @@
                     <CheckBox IsChecked="{Binding Path=BeamgunState.LockOnUsbDevice}" VerticalAlignment="Center"/>
                     <Label Content="陌生设备插入时锁定"/>
                 </StackPanel>
+                <StackPanel Orientation="Horizontal">
+                    <CheckBox IsChecked="{Binding Path=BeamgunState.StartWithWindows}" VerticalAlignment="Center" IsEnabled="{Binding Path=BeamgunState.IsAdmin}"/>
+                    <Label Content="开机自启动"/>
+                </StackPanel>
             </StackPanel>
             <TextBox Grid.Row="3" 
                      controls:TextBoxBehavior.ScrollOnTextChanged="True"

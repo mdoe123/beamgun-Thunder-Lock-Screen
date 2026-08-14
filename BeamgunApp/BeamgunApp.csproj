@@ -118,6 +118,7 @@
     <Compile Include="Models\VersionChecker.cs" />
     <Compile Include="Models\VersionCheckerTimer.cs" />
     <Compile Include="Models\WorkstationLocker.cs" />
+    <Compile Include="Models\AutoStartManager.cs" />
     <Compile Include="Models\AttackLogger.cs" />
     <Compile Include="Models\LockScreenLocker.cs" />
     <Compile Include="Models\LockScreenText.cs" />

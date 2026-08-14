@@ -12,6 +12,7 @@ namespace BeamgunApp.Models
         bool LockOnMouse { get; set; }
         bool DisableNetworkAdapter { get; set; }
         bool LockOnUsbDevice { get; set; }
+        bool StartWithWindows { get; set; }
         uint StealFocusInterval { get; set; }
         Version LatestVersion { get; set; }
         string DownloadUrl { get; set; }
@@ -169,6 +170,17 @@ namespace BeamgunApp.Models
                 _backing.Set(LockOnUsbDeviceSubkey, value);
             }
         }
+        public bool StartWithWindows
+        {
+            get
+            {
+                return _backing.GetWithDefault(StartWithWindowsSubkey, StartWithWindowsDefault);
+            }
+            set
+            {
+                _backing.Set(StartWithWindowsSubkey, value);
+            }
+        }
         public string GraphicsTheme
         {
             get
@@ -213,6 +225,8 @@ namespace BeamgunApp.Models
         private const bool DisableNetworkAdapterDefault = true;
         private const string LockOnUsbDeviceSubkey = "LockOnUsbDevice";
         private const bool LockOnUsbDeviceDefault = true;
+        private const string StartWithWindowsSubkey = "StartWithWindows";
+        private const bool StartWithWindowsDefault = false;
         private const string StealFocusIntervalKey = "StealFocusInterval";
         private const uint StealFocusIntervalDefault = 10;
         private const string BeamgunIdKey = "BeamgunId";

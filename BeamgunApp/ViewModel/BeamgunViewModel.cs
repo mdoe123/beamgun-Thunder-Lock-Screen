@@ -58,6 +58,12 @@ namespace BeamgunApp.ViewModel
             _passwordStore = new PasswordStore();
             _passwordStore.ExternalChangeDetected += OnPasswordFileChanged;
             _deviceEjector = new DeviceEjector();
+            _autoStartManager = new AutoStartManager();
+            BeamgunState.PropertyChanged += (sender, args) =>
+            {
+                if (args.PropertyName != nameof(BeamgunState.StartWithWindows)) return;
+                ApplyAutoStart(BeamgunState.StartWithWindows);
+            };
             _lockScreen = new LockScreenLocker(_passwordStore, _attackLogger);
             _lockScreen.Unlocked += Reset;
             _lockScreen.DeviceUnlocked += OnDeviceUnlocked;
@@ -213,6 +219,25 @@ namespace BeamgunApp.ViewModel
         }
 
         /// <summary>
+        /// 根据开关状态创建或删除开机自启动计划任务。
+        /// </summary>
+        private void ApplyAutoStart(bool enabled)
+        {
+            try
+            {
+                if (enabled)
+                    _autoStartManager.Enable();
+                else
+                    _autoStartManager.Disable();
+                BeamgunState.AppendToAlert(enabled ? "已开启开机自启动。" : "已关闭开机自启动。");
+            }
+            catch (Exception ex)
+            {
+                BeamgunState.AppendToAlert($"开机自启动设置失败：{ex.Message}");
+            }
+        }
+
+        /// <summary>
         /// 陌生设备触发锁定并成功解锁后，弹出授权对话框询问用户是否授权该设备。
         /// 授权则加入白名单，不授权则安全弹出设备。
         /// </summary>
@@ -288,5 +313,6 @@ namespace BeamgunApp.ViewModel
         private readonly PasswordStore _passwordStore;
         private readonly LockScreenLocker _lockScreen;
         private readonly DeviceEjector _deviceEjector;
+        private readonly AutoStartManager _autoStartManager;
     }
 }

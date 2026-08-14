@@ -96,6 +96,15 @@ namespace BeamgunApp.Models
                 OnPropertyChanged(nameof(LockOnUsbDevice));
             }
         }
+        public bool StartWithWindows
+        {
+            get { return _settings.StartWithWindows; }
+            set
+            {
+                _settings.StartWithWindows = value;
+                OnPropertyChanged(nameof(StartWithWindows));
+            }
+        }
         public bool IsAdmin => _settings.IsAdmin;
 
         public bool UsbMassStorageDisabled
