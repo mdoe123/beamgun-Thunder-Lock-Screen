@@ -16,6 +16,7 @@ namespace BeamgunApp.ViewModel
         void ClearAlerts();
         void SetPassword();
         void ManageWhitelist();
+        void ModifySendKey();
     }
 
     public class BeamgunViewModel : IDisposable, IViewModel
@@ -29,6 +30,7 @@ namespace BeamgunApp.ViewModel
         public ICommand ClearAlertsCommand { get; }
         public ICommand SetPasswordCommand { get; }
         public ICommand ManageWhitelistCommand { get; }
+        public ICommand ServerChanKeyCommand { get; }
         public Action StealFocus { get; set; }
 
         public bool IsVisible
@@ -82,6 +84,7 @@ namespace BeamgunApp.ViewModel
             ClearAlertsCommand = new ClearAlertsCommand(this);
             SetPasswordCommand = new SetPasswordCommand(this);
             ManageWhitelistCommand = new ManageWhitelistCommand(this);
+            ServerChanKeyCommand = new Commands.ServerChanKeyCommand(this);
             _keystrokeHooker = InstallKeystrokeHooker();
             _usbStorageGuard = InstallUsbStorageGuard(beamgunSettings);
             _alarm = InstallAlarm(beamgunSettings);
@@ -254,6 +257,20 @@ namespace BeamgunApp.ViewModel
         {
             var window = new ManageWhitelistWindow();
             window.ShowDialog();
+        }
+
+        /// <summary>
+        /// 修改 Server酱 SendKey。
+        /// </summary>
+        public void ModifySendKey()
+        {
+            var window = new ServerChanWindow(_serverChan);
+            window.ShowDialog();
+            if (window.DialogResult == true)
+            {
+                BeamgunState.AppendToAlert("Server酱 SendKey 已更新。");
+                _attackLogger.Log("Server酱 SendKey 已更新。");
+            }
         }
 
         /// <summary>

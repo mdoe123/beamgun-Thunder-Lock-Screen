@@ -76,15 +76,15 @@ Server酱提醒
 
 开启后，程序会在每次记录日志（包括攻击告警、解锁、授权、密码修改等）时，通过 Server酱 把日志内容实时推送到你的手机微信。
 
-1. 在主窗口勾选「Server酱手机提醒」开关。
-2. 程序会在 exe 同目录生成 `serverchan.json`：
+1. 在主窗口点击「SendKey」按钮，输入你的 SendKey 保存到 `serverchan.json`（此文件结构示例）：
    ```
    {
      "Enabled": true,
      "SendKey": "SCT401341Tze7PsnxTmQaILZP9ZUTYP3Ez"
    }
    ```
-3. `SendKey` 是你在 [Server酱](https://sct.ftqq.com/) 申请的 SendKey。要更换自己的 key 时，直接编辑 `serverchan.json` 里的 `SendKey` 即可，保存后无需重启。
+2. 勾选「Server酱手机提醒」开关，开启推送。
+3. `SendKey` 是你在 [Server酱](https://sct.ftqq.com/) 申请的 SendKey。此后要更换 key 时，直接点主窗口「SendKey」按钮，或编辑 `serverchan.json` 里的 `SendKey` 保存即可，无需重启。
 
 > 提示：需保持网络连接才能推送成功。未配置或推送失败不会影响程序其他功能，且同一秒内仅推送一次，避免刷屏。
 
@@ -147,6 +147,7 @@ Server酱提醒
 | 退出 | 退出程序 |
 | 设置密码 | 设置/修改解锁密码 |
 | 管理设备 | 查看、删除已授权设备（白名单） |
+| SendKey | 修改 Server酱 SendKey，保存到 `serverchan.json` |
 | 禁用USB存储 | 切换 USB 大容量存储设备的启用/禁用（需管理员权限） |
 | 键盘插入时锁定 | 开关：键盘插入时触发全屏锁定 |
 | 鼠标插入时锁定 | 开关：鼠标插入时触发全屏锁定 |

@@ -57,6 +57,15 @@ namespace BeamgunApp.Models
         }
 
         /// <summary>
+        /// 设置 SendKey 并写回配置文件。
+        /// </summary>
+        public void SetSendKey(string sendKey)
+        {
+            _config.SendKey = sendKey ?? string.Empty;
+            SaveConfig();
+        }
+
+        /// <summary>
         /// 异步发送一条日志到手机。未开启推送、未配置 SendKey 或距上次发送不足 1 秒时忽略。
         /// </summary>
         public async void Notify(string message)

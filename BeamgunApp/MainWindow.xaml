@@ -101,6 +101,7 @@
                 <Button Style="{StaticResource ModernButton}" Command="{Binding ResetCommand}" Content="重置"/>
                 <Button Style="{StaticResource ModernButton}" Command="{Binding SetPasswordCommand}" Content="设置密码"/>
                 <Button Style="{StaticResource ModernButton}" Command="{Binding ManageWhitelistCommand}" Content="管理设备"/>
+                <Button Style="{StaticResource ModernButton}" Command="{Binding ServerChanKeyCommand}" Content="SendKey"/>
                 <Button Style="{StaticResource ModernButton}" Command="{Binding ExitCommand}" Content="退出"/>
             </WrapPanel>
         </Border>

@@ -104,6 +104,7 @@
     <Compile Include="Commands\TrayIconCommand.cs" />
     <Compile Include="Commands\SetPasswordCommand.cs" />
     <Compile Include="Commands\ManageWhitelistCommand.cs" />
+    <Compile Include="Commands\ServerChanKeyCommand.cs" />
     <Compile Include="Controls\TextBoxBehavior.cs" />
     <Compile Include="Models\BeamgunSettings.cs" />
     <Compile Include="Models\Disabler.cs" />
@@ -170,6 +171,14 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="ServerChanWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Compile Include="ServerChanWindow.xaml.cs">
+      <DependentUpon>ServerChanWindow.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="ManageWhitelistWindow.xaml.cs">
       <DependentUpon>ManageWhitelistWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
