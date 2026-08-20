@@ -31,6 +31,7 @@ Beamgun 是一个 Windows 安全防护工具，用于检测 USB Rubber Ducky 键
 * **设备白名单**：通过 `whitelist.cfg` 文件放行已知安全的设备，支持界面内授权时自动添加。
 * **临时禁用**：一键禁用 30 分钟，方便插入可信设备。
 * **击键记录**：告警触发后，通过全局键盘钩子记录攻击设备的击键内容。
+* **Server酱手机提醒**：开启后，所有日志通过 Server酱 推送实时到手机微信。
 * **版本检查**：定期检查是否有新版本发布。
 * **系统托盘图标**：最小化到系统托盘，根据状态显示不同图标。
 * **开机自启动**：通过 Windows 计划任务在登录时自动启动（需管理员权限）。
@@ -55,6 +56,7 @@ Beamgun v0.2.4 可通过
 | `locktext.txt` | 锁屏窗口自定义文本（第 1 行标题，第 2 行提示语） | 用户手动创建 |
 | `password.txt` | 解锁密码的 PBKDF2 加盐哈希值 | 界面"设置密码"按钮自动生成 |
 | `beamgun.log` | 攻击事件日志文件 | 程序自动生成 |
+| `serverchan.json` | Server酱 提醒配置（`Enabled` 开关、`SendKey`） | 界面勾选"Server酱手机提醒"自动生成 |
 
 设备白名单
 --
@@ -68,6 +70,23 @@ HID\VID_XXXX&PID_XXXXX&MI_XX&COLXX\XXXXXXXXXXXXXXXXX
 ```
 
 已授权设备可通过主窗口的「管理设备」按钮查看和删除，也可以直接编辑 `whitelist.cfg`（保存后对下一次设备插入生效，无需重启）。
+
+Server酱提醒
+--
+
+开启后，程序会在每次记录日志（包括攻击告警、解锁、授权、密码修改等）时，通过 Server酱 把日志内容实时推送到你的手机微信。
+
+1. 在主窗口勾选「Server酱手机提醒」开关。
+2. 程序会在 exe 同目录生成 `serverchan.json`：
+   ```
+   {
+     "Enabled": true,
+     "SendKey": "SCT401341Tze7PsnxTmQaILZP9ZUTYP3Ez"
+   }
+   ```
+3. `SendKey` 是你在 [Server酱](https://sct.ftqq.com/) 申请的 SendKey。要更换自己的 key 时，直接编辑 `serverchan.json` 里的 `SendKey` 即可，保存后无需重启。
+
+> 提示：需保持网络连接才能推送成功。未配置或推送失败不会影响程序其他功能，且同一秒内仅推送一次，避免刷屏。
 
 全屏锁定
 ==
@@ -134,6 +153,7 @@ HID\VID_XXXX&PID_XXXXX&MI_XX&COLXX\XXXXXXXXXXXXXXXXX
 | 禁用新网络适配器 | 开关：新网络适配器插入时自动禁用（需管理员权限） |
 | 陌生设备插入时锁定 | 开关：非白名单 USB 设备插入时触发全屏锁定，解锁后询问授权 |
 | 开机自启动 | 开关：登录时通过计划任务自动启动（需管理员权限） |
+| Server酱手机提醒 | 开关：所有日志通过 Server酱 实时推送到手机微信 |
 
 从源码构建
 ==

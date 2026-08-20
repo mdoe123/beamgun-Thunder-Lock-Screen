@@ -107,6 +107,20 @@ namespace BeamgunApp.Models
         }
         public bool IsAdmin => _settings.IsAdmin;
 
+        /// <summary>Server酱 手机提醒通知器，由 ViewModel 注入。</summary>
+        public ServerChanNotify ServerChan { get; set; }
+
+        /// <summary>是否启用 Server酱 手机提醒。</summary>
+        public bool ServerChanEnabled
+        {
+            get { return ServerChan?.Enabled ?? false; }
+            set
+            {
+                ServerChan?.SetEnabled(value);
+                OnPropertyChanged(nameof(ServerChanEnabled));
+            }
+        }
+
         public bool UsbMassStorageDisabled
         {
             get { return _usbMassStorageDisabled; }

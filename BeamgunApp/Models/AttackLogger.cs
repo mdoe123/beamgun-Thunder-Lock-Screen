@@ -16,6 +16,9 @@ namespace BeamgunApp.Models
 
         private readonly object _lock = new object();
 
+        /// <summary>可选的 Server酱 推送器，写入日志后同步推送到手机。</summary>
+        public ServerChanNotify Notifier { get; set; }
+
         public void Log(string message)
         {
             var line = $"{DateTime.Now:yyyy-MM-dd HH:mm:ss} {message}";
@@ -30,6 +33,9 @@ namespace BeamgunApp.Models
             {
                 // 日志写入失败不应中断告警流程。
             }
+
+            // 所有日志（含解锁、授权、密码更改等）都推送到手机。
+            Notifier?.Notify(line);
         }
     }
 }

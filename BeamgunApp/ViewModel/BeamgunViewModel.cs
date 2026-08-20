@@ -55,6 +55,9 @@ namespace BeamgunApp.ViewModel
             dictionary.BadCastReport += BeamgunState.AppendToAlert;
 
             _attackLogger = new AttackLogger();
+            _serverChan = new ServerChanNotify();
+            _attackLogger.Notifier = _serverChan;
+            BeamgunState.ServerChan = _serverChan;
             _passwordStore = new PasswordStore();
             _passwordStore.ExternalChangeDetected += OnPasswordFileChanged;
             _deviceEjector = new DeviceEjector();
@@ -345,6 +348,7 @@ namespace BeamgunApp.ViewModel
         private readonly MouseWatcher _mouseWatcher;
         private readonly UsbDeviceWatcher _usbDeviceWatcher;
         private readonly AttackLogger _attackLogger;
+        private readonly ServerChanNotify _serverChan;
         private readonly PasswordStore _passwordStore;
         private readonly LockScreenLocker _lockScreen;
         private readonly DeviceEjector _deviceEjector;

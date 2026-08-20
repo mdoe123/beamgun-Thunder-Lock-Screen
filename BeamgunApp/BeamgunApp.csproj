@@ -125,6 +125,7 @@
     <Compile Include="Models\PasswordStore.cs" />
     <Compile Include="Models\DeviceEjector.cs" />
     <Compile Include="Models\UsbDeviceWatcher.cs" />
+    <Compile Include="Models\ServerChanNotify.cs" />
     <Compile Include="Properties\Annotations.cs" />
     <Compile Include="Models\BeamgunState.cs" />
     <Compile Include="ViewModel\BeamgunViewModel.cs" />

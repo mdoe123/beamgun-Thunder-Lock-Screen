@@ -113,6 +113,7 @@
                 <CheckBox IsChecked="{Binding Path=BeamgunState.DisableNetworkAdapter}" VerticalAlignment="Center" Margin="6,4" Content="禁用新网络适配器" IsEnabled="{Binding Path=BeamgunState.IsAdmin}"/>
                 <CheckBox IsChecked="{Binding Path=BeamgunState.UsbMassStorageDisabled}" VerticalAlignment="Center" Margin="6,4" Content="禁用USB存储" IsEnabled="{Binding Path=BeamgunState.IsAdmin}"/>
                 <CheckBox IsChecked="{Binding Path=BeamgunState.StartWithWindows}" VerticalAlignment="Center" Margin="6,4" Content="开机自启动" IsEnabled="{Binding Path=BeamgunState.IsAdmin}"/>
+                <CheckBox IsChecked="{Binding Path=BeamgunState.ServerChanEnabled}" VerticalAlignment="Center" Margin="6,4" Content="Server酱手机提醒"/>
             </WrapPanel>
         </Border>
 
